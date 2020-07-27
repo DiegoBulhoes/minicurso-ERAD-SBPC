@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Diego
+  description: your role description
+  company: your company (optional)
+
+  license: license MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: debian
+      versions:
+        - 9
+        - 8

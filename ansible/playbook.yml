@@ -1,0 +1,7 @@
+- name: "Provision Docker Swarm Cluster"
+  hosts: all
+  become: yes
+  roles:
+    - role: ansible-node-exporter
+    - role: swarm
+    - role: stack-monitoring

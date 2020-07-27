@@ -1,0 +1,52 @@
+---
+- name: Installing the latest version of Docker
+  shell: curl -sS https://get.docker.com | sh
+
+- name: Download docker-compose.
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
+    dest: "/usr/local/bin/docker-compose"
+    mode: "0755"
+
+- name: Get the information from the Docker
+  shell: docker info
+  register: docker_info
+
+- name: Init Swarm - First manager.
+  shell: docker swarm init
+    --listen-addr {{ swarm_address_manager }}
+    --advertise-addr {{ swarm_address_manager }}
+  when: "docker_info.stdout.find('Swarm: active') == -1
+    and inventory_hostname == groups['manager'][0]"
+
+- name: Get token - Manager
+  shell: docker swarm join-token -q manager
+  changed_when: False
+  register: docker_manager_token
+  delegate_to: "{{ groups['manager'][0] }}"
+  when: "docker_info.stdout.find('Swarm: active') == -1"
+
+- name: Add manager to the cluster
+  shell: docker swarm join --token "{{ docker_manager_token.stdout }}"    {{ swarm_address_manager}}:{{swarm_port}}
+  changed_when: False
+  when: "docker_info.stdout.find('Swarm: active') == -1
+    and 'manager' in group_names
+    and inventory_hostname != groups['manager'][0]"
+
+- name: Check the status of Docker Swarm
+  shell: docker info
+  changed_when: False
+  register: docker_info
+
+- name: Get token - Worker.
+  shell: docker swarm join-token -q worker
+  changed_when: False
+  register: docker_worker_token
+  delegate_to: "{{ groups['manager'][0] }}"
+  when: "docker_info.stdout.find('Swarm: active') == -1"
+
+- name: Add worker to the cluster
+  shell: docker swarm join --token "{{ docker_worker_token.stdout }}"   {{swarm_address_manager}}:{{swarm_port}}
+  changed_when: False
+  when: "docker_info.stdout.find('Swarm: active') == -1
+    and docker_info.stdout.find('Swarm: pending') == -1"
