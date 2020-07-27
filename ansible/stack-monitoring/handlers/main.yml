@@ -1,0 +1,8 @@
+---
+- name: restart Prometheus
+  uri:
+    url: "http://{{groups['manager'][0]}}:9090/-/reload"
+    method: POST
+  retries: 10
+  delay: 3
+  when: "inventory_hostname == groups['manager'][0]"
