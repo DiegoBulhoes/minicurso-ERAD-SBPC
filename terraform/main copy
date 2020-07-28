@@ -1,0 +1,109 @@
+provider "google" {
+  project = var.project
+  region  = var.region
+  zone    = var.zone
+}
+
+resource "google_compute_instance" "worker" {
+  count        = "2"
+  name         = "worker-${count.index + 1}"
+  machine_type = "f1-micro"
+  tags         = ["worker", "monitoring"]
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+  metadata = {
+    ssh-keys = "erad:${file("~/.ssh/id_rsa_gcp_erad.pub")}"
+  }
+
+  network_interface {
+    subnetwork = "${google_compute_subnetwork.private_subnet.name}"
+    access_config {
+    }
+  }
+  depends_on = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_instance" "manager" {
+  count        = "1"
+  name         = "manager-${count.index + 1}"
+  machine_type = "f1-micro"
+  tags         = ["manager", "monitoring"]
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+  metadata = {
+    ssh-keys = "erad:${file("~/.ssh/id_rsa_gcp_erad.pub")}"
+  }
+
+  network_interface {
+    subnetwork = "${google_compute_subnetwork.public_subnet.name}"
+    access_config {
+    }
+  }
+  depends_on = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_network" "vpc_network" {
+  name                    = "${var.project}-network"
+  auto_create_subnetworks = "false"
+}
+
+resource "google_compute_subnetwork" "public_subnet" {
+  name          = "${var.project}-public-subnet"
+  ip_cidr_range = "${var.ip_cidr_range_public}"
+  network       = google_compute_network.vpc_network.id
+  region        = var.region
+  depends_on = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_subnetwork" "private_subnet" {
+  name          = "${var.project}-private-subnet"
+  ip_cidr_range = "${var.ip_cidr_range_private}"
+  network       = google_compute_network.vpc_network.id
+  region        = var.region
+  depends_on = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_firewall" "firewall_public_subnet" {
+  name    = "${var.project}-firewall-public"
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "9100", "9090", "3000", "8080", "9000"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+  depends_on    = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_firewall" "firewall_private_subnet" {
+  name    = "${var.project}-firewall-pivate"
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "9100", "9090", "3000", "8080", "9000", "2377"]
+  }
+
+  source_ranges = [
+    "${google_compute_subnetwork.public_subnet.ip_cidr_range}",
+    "${google_compute_subnetwork.private_subnet.ip_cidr_range}"
+  ]
+
+  depends_on = [google_compute_network.vpc_network]
+}

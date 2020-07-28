@@ -13,11 +13,6 @@ variable "project" {
   default = "erad-samble"
 }
 
-variable "subnet" {
-  type    = string
-  default = "subnetwork"
-}
-
 variable "ip_cidr_range_public" {
   type    = string
   default = "10.10.0.0/24"
