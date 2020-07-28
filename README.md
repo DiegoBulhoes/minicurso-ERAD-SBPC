@@ -2,36 +2,59 @@
 
 O minicurso tem como objetivo de realizar um processo de deploy de um app simples, através dos exercícios propostos durante o minicurso, será ensinado e exemplificado os conceitos das ferramentas **Ansible, Terraform e uma stack simples de monitoramento** (Prometheus, Node-export e Grafana).
 
-## Executando o Terraform
+## Terraform
+
+O Terraform irá instanciar 3 maquinas, 2 subredes(**public** e **private**) e compartilhar a chave pública do host com as máquinas virtuais, **deverá ter o nome "id_rsa_gcp_erad.pub"**. Para passar as credenciais para o terraform basta popular a variável de ambiente **GOOGLE_APPLICATION_CREDENTIALS**.
+
+```shell
+  export GOOGLE_APPLICATION_CREDENTIALS=<path_json>
+```
+
+### Executando o Terraform
 
 Para inicializar o Terraform, basta executar o seguinte comando:
 
 ```shell
-   terraform init
+  terraform init
 ```
 
 Após de ter inicializado, execute o seguinte comando para visualizar as alterações que o Terraform irá realizar:
 
 ```shell
-   terraform plan
+  terraform plan
 ```
 
 Para realizar as modificações:
 
 ```shell
-   terraform apply
+  terraform apply
 ```
 
-## Execultar o Ansible
+## Ansible
 
-Basta realizar o dowload do plugin **gce_compute**, para isso execute o seguinte comando:
+O Ansible irá configurar as 3 máquinas com as seguintes ferramentas:
+
+- Grafana
+- Cadvisor
+- Prometheus
+- Node-exporter
+
+Para que seja possível realizar a configuração será necessário popular a variável de ambiente **GCP_SERVICE_ACCOUNT_FILE**
 
 ```shell
-   pip install requests google-auth
+  export GCP_SERVICE_ACCOUNT_FILE=<path_json>
+```
+
+### Executar o Ansible
+
+Basta realizar o download do plugin **gce_compute**, para isso execute o seguinte comando:
+
+```shell
+  pip install requests google-auth
 ```
 
 Para inicializar o Ansible:
 
 ```shell
-   ansible-playbook -i inventory.gcp.yml -u erad  playbook.yml
+  ansible-playbook -i inventory.gcp.yml -u erad  playbook.yml
 ```

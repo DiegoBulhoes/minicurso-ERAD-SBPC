@@ -24,7 +24,7 @@ resource "google_compute_instance" "worker" {
     }
   }
   metadata = {
-    ssh-keys = "erad:${file("~/.ssh/id_rsa_gcp_erad.pub")}"
+    ssh-keys = "erad:${file(var.key_ssh)}"
   }
 
   network_interface {
@@ -46,7 +46,7 @@ resource "google_compute_instance" "manager" {
     }
   }
   metadata = {
-    ssh-keys = "erad:${file("~/.ssh/id_rsa_gcp_erad.pub")}"
+    ssh-keys = "erad:${file(var.key_ssh)}"
   }
 
   network_interface {
