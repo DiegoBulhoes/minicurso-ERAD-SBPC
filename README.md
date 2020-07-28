@@ -1,6 +1,6 @@
 # Minicurso para o ERAD SBPC - UFMS
 
-O minicurso tem como objetivo de realizar um processo de deploy de um app simples, através dos exercícios propostos durante o minicurso, será ensinado e exemplificado os conceitos das ferramentas **Ansible, Terraform e uma stack simples de monitoramento** (Prometheus, Node-export e Grafana).
+O minicurso tem como objetivo realizar um processo de deploy de um app simples. Através de exercícios propostos durante o minicurso, serão ensinados e exemplificados os conceitos das ferramentas **Ansible, Terraform e uma stack simples de monitoramento** (Prometheus, Node-export e Grafana).
 
 ## Terraform
 
@@ -18,7 +18,7 @@ Para inicializar o Terraform, basta executar o seguinte comando:
   terraform init
 ```
 
-Após de ter inicializado, execute o seguinte comando para visualizar as alterações que o Terraform irá realizar:
+Após ser inicializado, execute o seguinte comando para visualizar as alterações que o Terraform irá realizar:
 
 ```shell
   terraform plan
@@ -39,7 +39,7 @@ O Ansible irá configurar as 3 máquinas com as seguintes ferramentas:
 - Prometheus
 - Node-exporter
 
-Para que seja possível realizar a configuração será necessário popular a variável de ambiente **GCP_SERVICE_ACCOUNT_FILE**
+Para realizar a configuração será necessário popular a variável de ambiente **GCP_SERVICE_ACCOUNT_FILE**
 
 ```shell
   export GCP_SERVICE_ACCOUNT_FILE=<path_json>
@@ -47,7 +47,7 @@ Para que seja possível realizar a configuração será necessário popular a va
 
 ### Executar o Ansible
 
-Basta realizar o download do plugin **gce_compute**, para isso execute o seguinte comando:
+Para isso, basta realizar o download do plugin **gce_compute**, executando o seguinte comando:
 
 ```shell
   pip install requests google-auth
