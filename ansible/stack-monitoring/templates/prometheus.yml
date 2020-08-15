@@ -27,4 +27,4 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
     - targets:
-        - "cadvisor:8080"
+        - "{{groups['manager'][0]}}:8080"

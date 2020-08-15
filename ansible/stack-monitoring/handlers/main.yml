@@ -3,6 +3,6 @@
   uri:
     url: "http://{{hostvars[groups['manager'][0]]['ansible_default_ipv4']['address']}}:9090/-/reload"
     method: POST
-  retries: 10
-  delay: 3
+  retries: 15
+  delay: 5
   when: "inventory_hostname == groups['manager'][0]"
