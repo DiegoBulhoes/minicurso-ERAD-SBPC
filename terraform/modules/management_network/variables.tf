@@ -1,24 +1,28 @@
 variable "zone" {
-  type    = string
-  default = "us-central1-a"
+  type = string
 }
 
 variable "region" {
-  type    = string
-  default = "us-central1"
+  type = string
 }
 
 variable "project" {
-  type    = string
-  default = "erad-samble"
+  type = string
 }
 
 variable "ip_cidr_range_public" {
-  type    = string
-  default = "10.10.0.0/24"
+  type = string
 }
 
 variable "ip_cidr_range_private" {
-  type    = string
-  default = "10.20.10.0/24"
+  type = string
 }
+
+variable "port_firewall_public" {
+  type = list
+}
+
+variable "port_firewall_private" {
+  type = list
+}
+

@@ -30,7 +30,7 @@ resource "google_compute_firewall" "firewall_public_subnet" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "9090", "3000", "8080", "9000"]
+    ports    = var.port_firewall_public
   }
   source_ranges = ["0.0.0.0/0"]
   depends_on    = [google_compute_network.vpc_network]
@@ -46,7 +46,7 @@ resource "google_compute_firewall" "firewall_private_subnet" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "9100", "9090", "3000", "8080", "9000", "2377"]
+    ports    = var.port_firewall_private
   }
 
   source_ranges = [

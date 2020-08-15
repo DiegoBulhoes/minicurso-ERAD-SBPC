@@ -1,0 +1,17 @@
+zone = "us-central1-a"
+
+region  = "us-central1"
+
+project  = "erad"
+
+subnet  = "subnetwork"
+
+ip_cidr_range_public = "10.10.0.0/24"
+
+ip_cidr_range_private = "10.20.10.0/24"
+
+key_ssh = "~/.ssh/id_rsa_gcp_erad.pub"
+
+port_firewall_public =["22", "9090", "3000", "8080", "9000"]
+
+port_firewall_private = ["22", "9100", "9090", "3000", "8080", "9000", "2377"]

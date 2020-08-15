@@ -7,51 +7,18 @@ provider "google" {
 module "management_network" {
   source                = "./modules/management_network"
   project               = var.project
+  zone                  = var.zone
   region                = var.region
   ip_cidr_range_private = var.ip_cidr_range_private
   ip_cidr_range_public  = var.ip_cidr_range_public
+  port_firewall_public  = var.port_firewall_public
+  port_firewall_private = var.port_firewall_private
 }
 
-resource "google_compute_instance" "worker" {
-  count        = "2"
-  name         = "worker-${count.index + 1}"
-  machine_type = "f1-micro"
-  tags         = ["worker", "monitoring"]
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-  metadata = {
-    ssh-keys = "erad:${file(var.key_ssh)}"
-  }
-
-  network_interface {
-    subnetwork = module.management_network.private_subnetwork
-    access_config {
-    }
-  }
-}
-
-resource "google_compute_instance" "manager" {
-  count        = "1"
-  name         = "manager-${count.index + 1}"
-  machine_type = "f1-micro"
-  tags         = ["manager", "monitoring"]
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-  metadata = {
-    ssh-keys = "erad:${file(var.key_ssh)}"
-  }
-
-  network_interface {
-    subnetwork = module.management_network.public_subnetwork
-    access_config {
-    }
-  }
+module "compute_instance" {
+  source     = "./modules/compute_instance"
+  project    = var.project
+  key_ssh    = var.key_ssh
+  private_subnetwork = module.management_network.private_subnetwork
+  public_subnetwork = module.management_network.public_subnetwork
 }
