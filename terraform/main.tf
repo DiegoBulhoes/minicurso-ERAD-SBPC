@@ -16,9 +16,12 @@ module "management_network" {
 }
 
 module "compute_instance" {
-  source     = "./modules/compute_instance"
-  project    = var.project
-  key_ssh    = var.key_ssh
+  source             = "./modules/compute_instance"
+  project            = var.project
+  user_name          = var.user_name
+  count_manager      = var.count_manager
+  count_worker       = var.count_worker
+  key_ssh            = var.key_ssh
   private_subnetwork = module.management_network.private_subnetwork
-  public_subnetwork = module.management_network.public_subnetwork
+  public_subnetwork  = module.management_network.public_subnetwork
 }

@@ -6,6 +6,18 @@ variable "region" {
   type = string
 }
 
+variable "count_manager" {
+  type = string
+}
+
+variable "count_worker" {
+  type = string
+}
+
+variable "user_name" {
+  type = string
+}
+
 variable "project" {
   type = string
 }
