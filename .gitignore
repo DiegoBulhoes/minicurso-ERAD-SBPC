@@ -10,8 +10,8 @@
 *.tfstate
 *.tfstate.*
 *.tfvars
+
 *.tfvars.*
-!*.tfvars.sample
 
 # Crash log files
 crash.log
@@ -24,3 +24,9 @@ override.tf.json
 *_override.tf.json
 
 .env
+
+**/*inventory.*
+!**/inventory.gcp.yml.example
+
+!*.tfvars.example
+ansible/vars.yml
