@@ -30,8 +30,14 @@ resource "google_compute_firewall" "firewall_public_subnet" {
 
   allow {
     protocol = "tcp"
-    ports    = var.port_firewall_public
+    ports    = var.pub_net_firewall_port_TCP
   }
+
+  allow {
+    protocol = "udp"
+    ports    = var.pub_net_firewall_port_UDP
+  }
+
   source_ranges = ["0.0.0.0/0"]
   depends_on    = [google_compute_network.vpc_network]
 }
@@ -46,7 +52,12 @@ resource "google_compute_firewall" "firewall_private_subnet" {
 
   allow {
     protocol = "tcp"
-    ports    = var.port_firewall_private
+    ports    = var.pvt_net_firewall_port_TCP
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = var.pvt_net_firewall_port_UDP
   }
 
   source_ranges = [

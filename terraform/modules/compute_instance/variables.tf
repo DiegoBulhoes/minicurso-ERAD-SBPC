@@ -6,6 +6,11 @@ variable "user_name" {
   type = string
 }
 
+variable "machine_type" {
+  type    = string
+  default = "n1-standard-1"
+}
+
 variable "count_manager" {
   type = string
 }

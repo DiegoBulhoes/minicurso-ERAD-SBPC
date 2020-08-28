@@ -6,6 +6,10 @@ variable "region" {
   type = string
 }
 
+variable "machine_type" {
+  type = string
+}
+
 variable "count_manager" {
   type = string
 }
@@ -38,10 +42,18 @@ variable "key_ssh" {
   type = string
 }
 
-variable "port_firewall_public" {
+variable "pub_net_firewall_port_UDP" {
   type = list
 }
 
-variable "port_firewall_private" {
+variable "pub_net_firewall_port_TCP" {
+  type = list
+}
+
+variable "pvt_net_firewall_port_UDP" {
+  type = list
+}
+
+variable "pvt_net_firewall_port_TCP" {
   type = list
 }
