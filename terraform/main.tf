@@ -5,53 +5,27 @@ provider "google" {
 }
 
 module "management_network" {
-  source                = "./modules/management_network"
-  project               = var.project
-  region                = var.region
-  ip_cidr_range_private = var.ip_cidr_range_private
-  ip_cidr_range_public  = var.ip_cidr_range_public
+  source                    = "./modules/management_network"
+  project                   = var.project
+  zone                      = var.zone
+  region                    = var.region
+  ip_cidr_range_private     = var.ip_cidr_range_private
+  ip_cidr_range_public      = var.ip_cidr_range_public
+  pub_net_firewall_port_UDP = var.pub_net_firewall_port_UDP
+  pub_net_firewall_port_TCP = var.pub_net_firewall_port_TCP
+  pvt_net_firewall_port_UDP = var.pvt_net_firewall_port_UDP
+  pvt_net_firewall_port_TCP = var.pvt_net_firewall_port_TCP
 }
 
-resource "google_compute_instance" "worker" {
-  count        = "2"
-  name         = "worker-${count.index + 1}"
-  machine_type = "f1-micro"
-  tags         = ["worker", "monitoring"]
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-  metadata = {
-    ssh-keys = "erad:${file(var.key_ssh)}"
-  }
-
-  network_interface {
-    subnetwork = module.management_network.private_subnetwork
-    access_config {
-    }
-  }
+module "compute_instance" {
+  source             = "./modules/compute_instance"
+  project            = var.project
+  user_name          = var.user_name
+  machine_type       = var.machine_type
+  count_manager      = var.count_manager
+  count_worker       = var.count_worker
+  key_ssh            = var.key_ssh
+  private_subnetwork = module.management_network.private_subnetwork
+  public_subnetwork  = module.management_network.public_subnetwork
 }
 
-resource "google_compute_instance" "manager" {
-  count        = "1"
-  name         = "manager-${count.index + 1}"
-  machine_type = "f1-micro"
-  tags         = ["manager", "monitoring"]
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-  metadata = {
-    ssh-keys = "erad:${file(var.key_ssh)}"
-  }
-
-  network_interface {
-    subnetwork = module.management_network.public_subnetwork
-    access_config {
-    }
-  }
-}

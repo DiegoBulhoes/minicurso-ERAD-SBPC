@@ -1,0 +1,6 @@
+[submodule "ansible/roles/swarm"]
+	path = ansible/roles/swarm
+	url = https://github.com/DiegoBulhoes/docker-swarm-ansible
+[submodule "ansible/roles/node_exporter"]
+	path = ansible/roles/node_exporter
+	url = https://github.com/cloudalchemy/ansible-node-exporter.git

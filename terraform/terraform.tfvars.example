@@ -1,0 +1,29 @@
+zone = "us-central1-a"
+
+region  = "us-central1"
+
+project  = "erad"
+
+machine_type = "f1-micro"
+
+count_manager = 1
+
+count_worker = 3
+
+user_name = "erad"
+
+subnet  = "subnetwork"
+
+ip_cidr_range_public = "10.10.0.0/24"
+
+ip_cidr_range_private = "10.20.10.0/24"
+
+key_ssh = "~/.ssh/id_rsa_gcp_erad.pub"
+
+pub_net_firewall_port_UDP = []
+
+pub_net_firewall_port_TCP = ["22","7979", "9090", "3000", "8080", "80","9000"]
+
+pvt_net_firewall_port_UDP = ["7946","4789"]
+
+pvt_net_firewall_port_TCP = ["22", "7979","9100", "9090", "3000", "8080","80", "9000", "2377","7946","4789"]

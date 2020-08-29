@@ -1,0 +1,11 @@
+---
+# defaults file for swarms
+targets_node_exporter: "{{ansible_all_ipv4_addresses}}"
+targets_prometheus: ["{{groups['manager'][0]}}"]
+targets_cadvisor: ["{{groups['manager'][0]}}"]
+targets_alertmanager: []
+
+port_node_exporter: 9100
+port_cadvisor: 8080
+port_prometheus: 9090
+port_alertmanager: 9093
