@@ -1,9 +1,0 @@
----
-# defaults file for nfs
-nfs_exports: []
-ip_public_storage: "10.0.0.1"
-ip_private_storage: "10.20.0.1"
-nfs_rpcbind_state: started
-nfs_rpcbind_enabled: true
-nfs_mount_opts: rsize=8192,wsize=8192,timeo=14,intr
-nfs_version: 4

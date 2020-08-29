@@ -1,7 +1,7 @@
 plugin: gcp_compute
 projects:
-  - erad-samble
+  - erad
 auth_kind: serviceaccount
 keyed_groups:
-  - key: tags['items']
+  - key: description
     separator: ""

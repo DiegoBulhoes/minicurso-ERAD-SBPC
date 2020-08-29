@@ -29,12 +29,3 @@ module "compute_instance" {
   public_subnetwork  = module.management_network.public_subnetwork
 }
 
-# resource "google_service_account" "rexray" {
-#   account_id   = "rexray"
-#   display_name = "Account - Rexray"
-# }
-
-# resource "google_service_account_key" "mykey" {
-#   service_account_id = google_service_account.rexray.name
-# }
-
