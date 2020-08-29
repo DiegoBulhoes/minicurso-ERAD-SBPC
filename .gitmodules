@@ -3,4 +3,4 @@
 	url = https://github.com/DiegoBulhoes/docker-swarm-ansible
 [submodule "ansible/roles/node_exporter"]
 	path = ansible/roles/node_exporter
-	url = https://github.com/prometheus/node_exporter.git
+	url = https://github.com/cloudalchemy/ansible-node-exporter.git
