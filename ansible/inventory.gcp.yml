@@ -1,7 +1,0 @@
-plugin: gcp_compute
-projects:
-  - erad
-auth_kind: serviceaccount
-keyed_groups:
-  - key: description
-    separator: ""
