@@ -6,25 +6,32 @@ alerting:
   alertmanagers:
   - static_configs:
     - targets:
-      # - alertmanager:9093
+      {% for target in targets_alertmanager %}
+      - {{target}}:{{port_alertmanager}}
+      {% endfor %}
 
 
 scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 5s
     static_configs:
-    - targets: ["{{groups['manager'][0]}}:9090"]
+    - targets: 
+      {% for target in targets_prometheus %}
+      - {{target}}:{{port_prometheus}}
+      {% endfor %}
 
   - job_name: 'node-exporter'
     scrape_interval: 5s
     static_configs:
     - targets:
-      {% for m in groups['monitoring'] %}
-      - {{ hostvars[m]['ansible_default_ipv4']['address']}}:9100
+      {% for target in targets_node_exporter %}
+      - {{target}}:{{port_node_exporter}}
       {% endfor %}
 
   - job_name: cadvisor
     scrape_interval: 5s
     static_configs:
     - targets:
-        - "{{groups['manager'][0]}}:8080"
+      {% for target in targets_cadvisor %}
+      - {{target}}:{{port_cadvisor}}
+      {% endfor %}
