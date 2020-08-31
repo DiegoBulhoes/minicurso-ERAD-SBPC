@@ -21,6 +21,7 @@
   template:
     src: rexray.yml
     dest: "{{path_config_rexray}}"
+    force: yes
 
 - name: Transfer the keyfile - GCP
   copy:
