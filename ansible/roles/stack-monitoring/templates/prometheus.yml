@@ -10,7 +10,6 @@ alerting:
       - {{target}}:{{port_alertmanager}}
       {% endfor %}
 
-
 scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 5s
