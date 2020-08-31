@@ -1,0 +1,17 @@
+---
+# defaults file for rexray
+rexray_version: ""
+# channel can be stable | unstable | staged
+rexray_channel: stable
+
+path_local_gce_keyfile: "/tmp/foo"
+path_config_rexray: /etc/rexray
+
+gce_keyfile: /etc/gcekey.json
+gce_zone: us-west1-b
+gce_defaultDiskType:  pd-standard
+gce_tag: rexray
+gce_statusMaxAttempts: 10
+gce_statusInitialDelay: 100ms
+gce_statusTimeout: 2m
+gce_convertUnderscores: false

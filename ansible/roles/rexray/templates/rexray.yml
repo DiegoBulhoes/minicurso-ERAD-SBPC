@@ -1,0 +1,11 @@
+libstorage:
+  service: gcepd
+gcepd:
+  keyfile: "{{gce_keyfile}}"
+  zone: "{{gce_zone}}"
+  defaultDiskType: "{{gce_defaultDiskType}}"
+  tag: "{{gce_tag}}"
+  statusMaxAttempts: "{{gce_statusMaxAttempts}}"
+  statusInitialDelay: "{{gce_statusInitialDelay}}"
+  statusTimeout: "{{gce_statusTimeout}}"
+  convertUnderscores: "{{gce_convertUnderscores}}"

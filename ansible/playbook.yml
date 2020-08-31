@@ -5,6 +5,7 @@
     - vars.yml
   roles:
     - role: swarm
+    - role: rexray
 
 - name: "Provision - Monitoring"
   hosts: all
