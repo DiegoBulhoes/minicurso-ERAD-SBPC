@@ -4,36 +4,37 @@
     path: /opt/stack-monitoring/prometheus
     state: directory
     mode: "0755"
-  when: "inventory_hostname == groups['manager'][0]"
+  when: "inventory_hostname == manager"
 
-- name: Add prometheus.yml"
+- name: Add prometheus.yml
   template:
-    src: "prometheus.yml"
-    dest: "/opt/stack-monitoring/prometheus/prometheus.yml"
+    src: prometheus.yml
+    dest: /opt/stack-monitoring/prometheus/prometheus.yml
     owner: root
     group: root
-  when: "inventory_hostname == groups['manager'][0]"
+    force: yes
+  when: "inventory_hostname == manager"
 
 - name: Add docker-compose.yml"
   copy:
-    src: "../files/docker-compose.yml"
-    dest: "/opt/stack-monitoring/docker-compose.yml"
+    src: docker-compose.yml
+    dest: /opt/stack-monitoring/docker-compose.yml
     owner: root
     group: root
-  when: "inventory_hostname == groups['manager'][0]"
+  when: "inventory_hostname == manager"
 
-- name: Run `docker-compose up` again
+- name: Deploy stack - monitoring
   shell: "docker stack deploy --compose-file /opt/stack-monitoring/docker-compose.yml stack-monitoring"
-  when: "inventory_hostname == groups['manager'][0]"
+  when: "inventory_hostname == manager"
 
 - name: Download portainer-agent-stack.yml
   get_url:
     url: https://downloads.portainer.io/portainer-agent-stack.yml
     dest: /tmp/portainer-agent-stack.yml
-    mode: "0755"
-  when: "inventory_hostname == groups['manager'][0]"
+    mode: 0755
+  when: "inventory_hostname == manager"
 
-- name: Run `portainer-agent-stack.yml` again
+- name: Deploy portainer-agent-stack
   shell: "docker stack deploy --compose-file=/tmp/portainer-agent-stack.yml portainer"
-  when: "inventory_hostname == groups['manager'][0]"
+  when: "inventory_hostname == manager"
   notify: restart Prometheus

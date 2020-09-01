@@ -5,10 +5,13 @@
     - vars.yml
   roles:
     - role: swarm
+    - role: rexray
 
 - name: "Provision - Monitoring"
   hosts: all
   become: yes
+  vars_files:
+    - vars.yml
   roles:
     - role: node_exporter
     - role: stack-monitoring

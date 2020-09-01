@@ -38,6 +38,7 @@ O Ansible irá configurar as 3 máquinas com as seguintes ferramentas:
 - Cadvisor
 - Prometheus
 - Node-exporter
+- Rexray
 
 Para realizar a configuração será necessário popular a variável de ambiente **GCP_SERVICE_ACCOUNT_FILE**
 

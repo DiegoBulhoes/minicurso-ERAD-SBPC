@@ -1,0 +1,29 @@
+---
+# tasks file for rexray
+- name: Check if rexray installed
+  stat:
+    path: /usr/bin/rexray
+  register: rexray_installed
+
+- name: Check if rexray installed
+  get_url:
+    url: https://rexray.io/install
+    dest: /tmp
+    mode: 755
+  when: rexray_installed.stat.exists == False
+
+- name: Install Rexray
+  command: /tmp/install
+  notify: restart rexray
+  when: rexray_installed.stat.exists == False
+
+- name: Generate Rexray service configuration file
+  template:
+    src: rexray.yml
+    dest: "{{path_config_rexray}}"
+    force: yes
+
+- name: Transfer the keyfile - GCP
+  copy:
+    src: "{{path_local_gce_keyfile}}"
+    dest: "{{gce_keyfile}}"

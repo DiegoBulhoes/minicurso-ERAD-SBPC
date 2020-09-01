@@ -42,15 +42,3 @@ resource "google_compute_instance" "manager" {
     }
   }
 }
-
-# resource "null_resource" "file" {
-#   provisioner "file" {
-#     content    = "teste"
-#     destination = "/tmp/script.sh"
-#   }
-#   connection {
-#     type = "ssh"
-#     user = "erad"
-#   }
-# }
-
