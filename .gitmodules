@@ -4,3 +4,6 @@
 [submodule "ansible/roles/node_exporter"]
 	path = ansible/roles/node_exporter
 	url = https://github.com/cloudalchemy/ansible-node-exporter.git
+[submodule "ansible/roles/rexray"]
+	path = ansible/roles/rexray
+	url = https://github.com/DiegoBulhoes/ansible-rexray.git
