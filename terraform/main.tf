@@ -11,10 +11,10 @@ module "management_network" {
   region                    = var.region
   ip_cidr_range_private     = var.ip_cidr_range_private
   ip_cidr_range_public      = var.ip_cidr_range_public
-  pub_net_firewall_port_UDP = var.pub_net_firewall_port_UDP
-  pub_net_firewall_port_TCP = var.pub_net_firewall_port_TCP
-  pvt_net_firewall_port_UDP = var.pvt_net_firewall_port_UDP
-  pvt_net_firewall_port_TCP = var.pvt_net_firewall_port_TCP
+  pub_net_firewall_port_UDP = values(var.pub_net_firewall_port_UDP)
+  pub_net_firewall_port_TCP = values(var.pub_net_firewall_port_TCP)
+  pvt_net_firewall_port_UDP = values(var.pvt_net_firewall_port_UDP)
+  pvt_net_firewall_port_TCP = values(var.pvt_net_firewall_port_TCP)
 }
 
 module "compute_instance" {
