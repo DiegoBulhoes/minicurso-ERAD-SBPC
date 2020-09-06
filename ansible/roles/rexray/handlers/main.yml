@@ -1,6 +1,0 @@
----
-# handlers file for rexray
-- name: restart rexray
-  systemd:
-    name: rexray
-    state: reloaded

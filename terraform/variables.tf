@@ -43,17 +43,17 @@ variable "key_ssh" {
 }
 
 variable "pub_net_firewall_port_UDP" {
-  type = list
+  type = map
 }
 
 variable "pub_net_firewall_port_TCP" {
-  type = list
+  type = map
 }
 
 variable "pvt_net_firewall_port_UDP" {
-  type = list
+  type = map
 }
 
 variable "pvt_net_firewall_port_TCP" {
-  type = list
+  type = map
 }
