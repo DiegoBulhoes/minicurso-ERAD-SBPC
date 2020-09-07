@@ -59,8 +59,10 @@ services:
           memory: 64M
 
 volumes:
-  prometheus_data: {}
-  grafana_data: {}
+  prometheus:
+    driver: rexray
+  grafana:
+    driver: rexray
 
 networks:
   monitor-net:
