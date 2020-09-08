@@ -4,11 +4,11 @@ region  = "us-central1"
 
 project  = "erad"
 
-machine_type = "f1-micro"
+machine_type = "e2-medium"
 
 count_manager = 1
 
-count_worker = 1
+count_worker = 3
 
 user_name = "erad"
 

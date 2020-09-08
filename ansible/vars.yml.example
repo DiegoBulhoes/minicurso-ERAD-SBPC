@@ -5,6 +5,7 @@ path_local_gce_keyfile: "/tmp/foo.json"
 gce_keyfile: /etc/gcekey.json
 gce_zone: us-central1-a
 gce_defaultDiskType: pd-standard
+gce_convertUnderscores: true
 
 
 manager: "{{groups['manager'][0]}}"
