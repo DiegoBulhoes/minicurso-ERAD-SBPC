@@ -1,15 +1,20 @@
+# Docker - Swarm
 swarm_ip_internal_manager: "{{hostvars[groups['manager'][0]]['ansible_default_ipv4']['address']}}"
 swarm_ip_external_manager: "{{groups['manager'][0]}}"
 
+# RexRay
 path_local_gce_keyfile: "/tmp/foo.json"
 gce_keyfile: /etc/gcekey.json
 gce_zone: us-central1-a
 gce_defaultDiskType: pd-standard
 gce_convertUnderscores: true
 
-
-manager: "{{groups['manager'][0]}}"
+#Prometheus
 targets_node_exporter: "{{ groups['all'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list }}"
 targets_prometheus: ["{{groups['manager'][0]}}"]
 targets_cadvisor: ["{{groups['manager'][0]}}"]
 targets_alertmanager: []
+
+
+#Prometheus e App
+manager: "{{groups['manager'][0]}}"
