@@ -1,0 +1,4 @@
+---
+# defaults file for criticancia
+# variaveis serão sobrescrita
+manager: 127.0.0.1
