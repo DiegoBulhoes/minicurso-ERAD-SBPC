@@ -4,7 +4,7 @@ resource "google_compute_instance" "worker" {
   name         = "worker-${count.index + 1}"
   machine_type = var.machine_type
   description  = "worker"
-
+  tags         = ["ssh", "worker"]
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
@@ -26,6 +26,7 @@ resource "google_compute_instance" "manager" {
   name         = "manager-${count.index + 1}"
   machine_type = var.machine_type
   description  = "manager"
+  tags         = ["ssh", "manager"]
 
   boot_disk {
     initialize_params {

@@ -20,31 +20,10 @@ resource "google_compute_subnetwork" "private_subnetwork" {
   depends_on    = [google_compute_network.vpc_network]
 }
 
-resource "google_compute_firewall" "firewall_public_subnet" {
-  name    = "${var.project}-firewall-public"
-  network = google_compute_network.vpc_network.id
-
-  allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = var.pub_net_firewall_port_TCP
-  }
-
-  allow {
-    protocol = "udp"
-    ports    = var.pub_net_firewall_port_UDP
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-  depends_on    = [google_compute_network.vpc_network]
-}
-
-resource "google_compute_firewall" "firewall_private_subnet" {
-  name    = "${var.project}-firewall-pivate"
-  network = google_compute_network.vpc_network.id
+resource "google_compute_firewall" "worker" {
+  name        = "${var.project}-worker"
+  network     = google_compute_network.vpc_network.id
+  target_tags = ["worker"]
 
   allow {
     protocol = "icmp"
@@ -60,10 +39,43 @@ resource "google_compute_firewall" "firewall_private_subnet" {
     ports    = var.pvt_net_firewall_port_UDP
   }
 
-  source_ranges = [
-    "${google_compute_subnetwork.public_subnetwork.ip_cidr_range}",
-    "${google_compute_subnetwork.private_subnetwork.ip_cidr_range}"
-  ]
+  source_ranges = ["${google_compute_subnetwork.private_subnetwork.ip_cidr_range}"]
+  depends_on    = [google_compute_network.vpc_network]
+}
 
-  depends_on = [google_compute_network.vpc_network]
+resource "google_compute_firewall" "manager" {
+  name        = "${var.project}-manager"
+  network     = google_compute_network.vpc_network.id
+  target_tags = ["manager"]
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = var.pvt_net_firewall_port_TCP
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = var.pvt_net_firewall_port_UDP
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  depends_on    = [google_compute_network.vpc_network]
+}
+
+resource "google_compute_firewall" "firewall_ssh" {
+  name        = "${var.project}-ssh"
+  network     = google_compute_network.vpc_network.id
+  target_tags = ["ssh"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  depends_on    = [google_compute_network.vpc_network]
 }
