@@ -1,7 +1,7 @@
-output "worker_private" {
-  value = module.compute_instance.worker_private
+output "public_ip_worker" {
+  value = module.compute_instance.public_ip_worker
 }
 
-output "manager_public" {
-  value = module.compute_instance.manager_public
+output "public_ip_manager" {
+  value = module.compute_instance.public_ip_manager
 }

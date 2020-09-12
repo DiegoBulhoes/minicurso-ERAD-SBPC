@@ -10,11 +10,10 @@ gce_defaultDiskType: pd-standard
 gce_convertUnderscores: true
 
 #Prometheus
-targets_node_exporter: "{{ groups['all'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list }}"
+targets_node_exporter: "{{ groups['all'] | list }}"
 targets_prometheus: ["{{groups['manager'][0]}}"]
 targets_cadvisor: ["{{groups['manager'][0]}}"]
 targets_alertmanager: []
-
 
 #Prometheus e App
 manager: "{{groups['manager'][0]}}"

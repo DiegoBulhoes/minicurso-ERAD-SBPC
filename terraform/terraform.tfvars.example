@@ -8,39 +8,21 @@ machine_type = "e2-medium"
 
 count_manager = 1
 
-count_worker = 3
+count_worker = 1
 
 user_name = "erad"
 
-subnet  = "subnetwork"
-
-ip_cidr_range_public = "10.10.0.0/24"
-
-ip_cidr_range_private = "10.20.10.0/24"
-
 key_ssh = "~/.ssh/id_rsa.pub"
 
-pub_net_firewall_port_UDP = ({})
 
-pub_net_firewall_port_TCP = ({
-    "ssh"="22",
-    "prometheus"="9090",
-    "grafana"="3000",
-    "cadvisor"="8080",
-    "criticancia"="80",
-    "portainer"="9000",
-    "criticancia_api"="32566"
-})
-
-
-pvt_net_firewall_port_UDP = ({
+firewall_port_UDP = ({
     "docker_swarm_container_ingress_net"="4789",
     "node_exporter"="9100",
     "swarm_management_communications"="2377",
     "docker_swarm_container_net_sd"="7946"
 })
 
-pvt_net_firewall_port_TCP = ({
+firewall_port_TCP = ({
     "ssh"="22",
     "node_exporter"="9100",
     "prometheus"="9090",
