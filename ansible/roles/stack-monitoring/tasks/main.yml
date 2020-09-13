@@ -26,6 +26,7 @@
 - name: Deploy stack - monitoring
   shell: "docker stack deploy --compose-file /opt/stack-monitoring/docker-compose.yml stack-monitoring"
   when: "inventory_hostname == manager"
+  notify: restart Prometheus
 
 - name: Download portainer-agent-stack.yml
   get_url:
@@ -37,4 +38,3 @@
 - name: Deploy portainer-agent-stack
   shell: "docker stack deploy --compose-file=/tmp/portainer-agent-stack.yml portainer"
   when: "inventory_hostname == manager"
-  notify: restart Prometheus
