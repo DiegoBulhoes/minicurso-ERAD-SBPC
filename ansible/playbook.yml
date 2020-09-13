@@ -15,6 +15,7 @@
   roles:
     - role: node_exporter
     - role: stack-monitoring
+
 - name: "Deploy App"
   hosts: all
   become: yes

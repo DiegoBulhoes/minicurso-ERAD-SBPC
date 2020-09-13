@@ -37,7 +37,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role==manager
+          - node.role==wo
       restart_policy:
         condition: on-failure
 
