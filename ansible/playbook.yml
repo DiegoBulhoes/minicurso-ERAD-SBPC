@@ -15,3 +15,11 @@
   roles:
     - role: node_exporter
     - role: stack-monitoring
+
+- name: "Deploy App"
+  hosts: all
+  become: yes
+  vars_files:
+    - vars.yml
+  roles:
+    - criticancia

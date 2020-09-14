@@ -1,0 +1,28 @@
+---
+# tasks file for criticancia
+
+- name: Create a directory if it does not exist
+  file:
+    path: /opt/app/criticancia/
+    state: directory
+    mode: "0755"
+  when: "inventory_hostname == manager"
+
+- name: Add .env for configuration frontend
+  template:
+    src: .env.j2
+    dest: /opt/app/criticancia/.env
+    owner: root
+    group: root
+    force: yes
+  when: "inventory_hostname == manager"
+
+- name: Copy swarm compose yaml
+  copy:
+    src: swarm-compose.yml
+    dest: /opt/app/criticancia/swarm-compose.yml
+  when: "inventory_hostname == manager"
+
+- name: Deploy Cluster Swarm
+  shell: "docker stack deploy -c /opt/app/criticancia/swarm-compose.yml criticancia"
+  when: "inventory_hostname == manager"

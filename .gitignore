@@ -30,3 +30,5 @@ override.tf.json
 
 !*.tfvars.example
 ansible/vars.yml
+
+deploy.sh

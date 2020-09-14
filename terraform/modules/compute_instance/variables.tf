@@ -19,14 +19,9 @@ variable "count_worker" {
   type = string
 }
 
-variable "private_subnetwork" {
-  type = string
-}
-
-variable "public_subnetwork" {
-  type = string
-}
-
 variable "key_ssh" {
+  type = string
+}
+variable "network" {
   type = string
 }

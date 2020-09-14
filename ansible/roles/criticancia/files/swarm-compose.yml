@@ -1,0 +1,70 @@
+version: "3.7"
+services:
+  frontend:
+    image: vinny1892/eventfeedback-frontend
+    ports:
+      - 80:3000
+    configs:
+      - source: config_appfrontend
+        target: /usr/app/.env
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.role==worker
+    networks:
+      - feedbackevent
+
+  backend:
+    image: vinny1892/eventfeedback-backend
+    ports:
+      - 32566:80
+    depends_on:
+      - postgres
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.role==worker
+    networks:
+      - feedbackevent
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+    command: redis-server --requirepass seila123  --appendonly yes
+    networks:
+      - feedbackevent
+
+  postgres:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: "app"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "rootPassword"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+    networks:
+      - feedbackevent
+
+configs:
+  config_appfrontend:
+    file: /opt/app/criticancia/.env
+
+volumes:
+  postgres:
+    driver: rexray
+
+networks:
+  feedbackevent:
