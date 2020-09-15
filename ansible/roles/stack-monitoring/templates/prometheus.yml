@@ -34,3 +34,11 @@ scrape_configs:
       {% for target in targets_cadvisor %}
       - {{target}}:{{port_cadvisor}}
       {% endfor %}
+
+  - job_name: app
+    scrape_interval: 5s
+    static_configs:
+    - targets:
+      {% for target in targets_app %}
+      - {{target}}:{{port_app}}
+      {% endfor %}

@@ -4,8 +4,10 @@ targets_node_exporter: "127.0.0.1"
 targets_prometheus: ["127.0.0.1"]
 targets_cadvisor: ["127.0.0.1"]
 targets_alertmanager: []
+targets_app: [127.0.0.1]
 
 port_node_exporter: 9100
 port_cadvisor: 8080
 port_prometheus: 9090
 port_alertmanager: 9093
+port_app: 32566
