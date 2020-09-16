@@ -10,10 +10,25 @@
   template:
     src: prometheus.yml
     dest: /opt/stack-monitoring/prometheus/prometheus.yml
-    owner: root
-    group: root
     force: yes
+  register: info_config_prometheus
   when: "inventory_hostname == manager"
+
+- name: Get services running
+  shell: "docker service ls --format {% raw %}'{{.Name}}'{% endraw %}"
+  register: running_service_names
+  changed_when: False
+  when: "inventory_hostname == manager"
+
+- name: Removing the Prometheus service
+  shell: "docker service rm stack-monitoring_prometheus"
+  when: "info_config_prometheus.changed 
+  and running_service_names is search('monitoring_prometheus')"
+
+- name: Deleting the outdated configuration
+  shell: "docker config rm stack-monitoring_config_prometheus"
+  when: "info_config_prometheus.changed 
+  and running_service_names is search('monitoring_prometheus')"
 
 - name: Add docker-compose.yml"
   copy:
